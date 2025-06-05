@@ -7,7 +7,7 @@ on:
 env:
   ACR_NAME: springhelloregistry
   IMAGE_NAME: spring-hello
-  RESOURCE_GROUP: rg-spring-hello
+  RESOURCE_GROUP: cloud-shell-storage-eastus
 
 jobs:
   build-and-deploy:
