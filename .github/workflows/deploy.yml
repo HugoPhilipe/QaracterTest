@@ -23,6 +23,9 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
+      - name: Permitir execução do mvnw
+        run: chmod +x ./mvnw
+
       - name: Build with Maven
         run: ./mvnw package -DskipTests
 
