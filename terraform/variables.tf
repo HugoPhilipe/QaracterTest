@@ -38,3 +38,8 @@ variable "location" {
   description = "Localização dos recursos no Azure"
   type        = string
 }
+
+variable "container_app_name" {
+  description = "Nome do Azure Container App"
+  type        = string
+}
