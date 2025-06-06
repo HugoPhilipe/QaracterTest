@@ -34,4 +34,7 @@ variable "tenant_id" {
   description = "Tenant ID da Azure"
 }
 
-
+variable "location" {
+  description = "Localização dos recursos no Azure"
+  type        = string
+}
