@@ -55,9 +55,20 @@ jobs:
       - name: Instalar Terraform
         uses: hashicorp/setup-terraform@v3
 
+      - name: Terraform Plan
+        run: |
+          cd terraform
+          terraform plan -input=false
+
       - name: Terraform Init/Apply
         run: |
           cd terraform
           terraform init
-          terraform apply -auto-approve \
-            -var="container_image=${{ env.IMAGE_TAG }}"
+          terraform apply -auto-approve -input=false \
+            -var="subscription_id=${{ env.ARM_SUBSCRIPTION_ID }}" \
+            -var="client_id=${{ env.ARM_CLIENT_ID }}" \
+            -var="client_secret=${{ env.ARM_CLIENT_SECRET }}" \
+            -var="tenant_id=${{ env.ARM_TENANT_ID }}" \
+            -var="resource_group=${{ env.RESOURCE_GROUP }}" \
+            -var="acr_name=${{ env.ACR_NAME }}" \
+            -var="image_name=${{ env.IMAGE_NAME }}"
