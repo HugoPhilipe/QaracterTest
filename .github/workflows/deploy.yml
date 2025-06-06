@@ -55,15 +55,19 @@ jobs:
       - name: Instalar Terraform
         uses: hashicorp/setup-terraform@v3
 
+      - name: Terraform Init
+        run: |
+          cd terraform
+          terraform init -upgrade
+
       - name: Terraform Plan
         run: |
           cd terraform
           terraform plan -input=false
 
-      - name: Terraform Init/Apply
+      - name: Terraform Apply
         run: |
           cd terraform
-          terraform init -upgrade
           terraform apply -auto-approve \
             -var="subscription_id=${{ env.ARM_SUBSCRIPTION_ID }}" \
             -var="client_id=${{ env.ARM_CLIENT_ID }}" \
