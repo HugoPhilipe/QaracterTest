@@ -8,7 +8,7 @@ resource "azurerm_resource_group" "rg" {
 }
 
 resource "azurerm_container_registry" "acr" {
-  name                = "springhelloregistry"
+  name                = var.acr_name
   resource_group_name = var.resource_group
   location            = var.location
   sku                 = "Basic"
@@ -22,7 +22,7 @@ resource "azurerm_container_app_environment" "env" {
 }
 
 resource "azurerm_container_app" "app" {
-  name                         = "spring-hello-app"
+  name                         = var.container_app_name
   container_app_environment_id = azurerm_container_app_environment.env.id
   resource_group_name          = var.resource_group
   revision_mode                = "Single"  # ou "Multiple" se você quiser controle de revisões

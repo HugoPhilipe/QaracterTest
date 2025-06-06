@@ -10,3 +10,14 @@ variable "container_app_name" {
 variable "container_image" {
   description = "Docker image to deploy"
 }
+
+variable "acr_name" {
+  type        = string
+  description = "Nome do Azure Container Registry"
+}
+
+variable "image_name" {
+  type        = string
+  description = "Nome da imagem Docker"
+}
+
