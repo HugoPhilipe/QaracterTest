@@ -72,5 +72,3 @@ jobs:
             -var="resource_group=${{ env.RESOURCE_GROUP }}" \
             -var="acr_name=${{ env.ACR_NAME }}" \
             -var="image_name=${{ env.IMAGE_NAME }}"
-      
-      

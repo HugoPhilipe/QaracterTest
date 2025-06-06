@@ -1,11 +1,6 @@
 variable "resource_group" {
-  default = "rg-spring-hello"
-}
-variable "location" {
-  default = "eastus"
-}
-variable "container_app_name" {
-  default = "spring-hello-app"
+  description = "Resource Group"
+  type        = string
 }
 
 variable "acr_name" {
