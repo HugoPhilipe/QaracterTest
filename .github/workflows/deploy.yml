@@ -63,7 +63,7 @@ jobs:
       - name: Terraform Init/Apply
         run: |
           cd terraform
-          terraform init
+          terraform init -upgrade
           terraform apply -auto-approve \
             -var="subscription_id=${{ env.ARM_SUBSCRIPTION_ID }}" \
             -var="client_id=${{ env.ARM_CLIENT_ID }}" \
