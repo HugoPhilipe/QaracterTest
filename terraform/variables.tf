@@ -7,9 +7,6 @@ variable "location" {
 variable "container_app_name" {
   default = "spring-hello-app"
 }
-variable "container_image" {
-  description = "Docker image to deploy"
-}
 
 variable "acr_name" {
   type        = string

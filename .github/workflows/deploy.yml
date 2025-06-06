@@ -64,7 +64,7 @@ jobs:
         run: |
           cd terraform
           terraform init
-          terraform apply -auto-approve -input=false \
+          terraform apply -auto-approve \
             -var="subscription_id=${{ env.ARM_SUBSCRIPTION_ID }}" \
             -var="client_id=${{ env.ARM_CLIENT_ID }}" \
             -var="client_secret=${{ env.ARM_CLIENT_SECRET }}" \
@@ -72,3 +72,5 @@ jobs:
             -var="resource_group=${{ env.RESOURCE_GROUP }}" \
             -var="acr_name=${{ env.ACR_NAME }}" \
             -var="image_name=${{ env.IMAGE_NAME }}"
+      
+      
