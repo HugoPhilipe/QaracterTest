@@ -21,3 +21,25 @@ variable "image_name" {
   description = "Nome da imagem Docker"
 }
 
+variable "subscription_id" {
+  type        = string
+  description = "ID da assinatura da Azure"
+}
+
+variable "client_id" {
+  type        = string
+  description = "Client ID do Service Principal"
+}
+
+variable "client_secret" {
+  type        = string
+  description = "Client Secret do Service Principal"
+  sensitive   = true
+}
+
+variable "tenant_id" {
+  type        = string
+  description = "Tenant ID da Azure"
+}
+
+
