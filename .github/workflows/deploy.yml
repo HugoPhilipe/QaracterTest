@@ -5,13 +5,10 @@ on:
     branches: [ "main" ]
 
 env:
-  ACR_NAME: springhelloregistry
-  IMAGE_NAME: spring-hello
-  RESOURCE_GROUP: cloud-shell-storage-eastus
-  ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-  ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
-  ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-  ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+  env:
+    ACR_NAME: springhelloregistry
+    IMAGE_NAME: spring-hello
+    RESOURCE_GROUP: cloud-shell-storage-eastus
 
 jobs:
   build-and-deploy:
