@@ -1,47 +1,57 @@
+# Nome do workflow do GitHub Actions
 name: Deploy to Azure
 
+# Dispara o workflow em push na branch main
 on:
   push:
     branches: [ "main" ]
 
+# Variáveis de ambiente globais usadas no workflow
 env:
   ACR_NAME: springhelloregistry
   IMAGE_NAME: spring-hello
   RESOURCE_GROUP: cloud-shell-storage-eastus
 
-
 jobs:
   build-and-deploy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  # Define o runner do GitHub Actions
 
     steps:
+      # Faz o checkout do código do repositório
       - name: Checkout code
         uses: actions/checkout@v3
 
+      # Configura o Java 17 (Temurin) para o build
       - name: Set up Java
         uses: actions/setup-java@v3
         with:
           java-version: '17'
           distribution: 'temurin'
 
+      # Permite execução do script Maven wrapper
       - name: Permitir execução do mvnw
         run: chmod +x ./mvnw
 
+      # Compila o projeto Java com Maven, sem rodar testes
       - name: Build with Maven
         run: ./mvnw package -DskipTests
 
+      # Prepara o ambiente para build de imagens Docker
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
+      # Faz login na conta Azure usando credenciais do repositório
       - name: Log in to Azure
         uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
+      # Faz login no Azure Container Registry (ACR)
       - name: Log in to ACR
         run: |
           az acr login --name $ACR_NAME
 
+      # Constrói e envia a imagem Docker para o ACR
       - name: Build and push Docker image
         run: |
           IMAGE_TAG=${{ env.ACR_NAME }}.azurecr.io/${{ env.IMAGE_NAME }}:latest
@@ -49,6 +59,7 @@ jobs:
           docker push $IMAGE_TAG
           echo "IMAGE_TAG=$IMAGE_TAG" >> $GITHUB_ENV
 
+      # Exporta variáveis de ambiente do Azure para uso no Terraform
       - name: Exportar variáveis do Azure
         run: |
           echo "ARM_SUBSCRIPTION_ID=${{ fromJson(secrets.AZURE_CREDENTIALS).subscriptionId }}" >> $GITHUB_ENV
@@ -56,19 +67,23 @@ jobs:
           echo "ARM_CLIENT_SECRET=${{ fromJson(secrets.AZURE_CREDENTIALS).clientSecret }}" >> $GITHUB_ENV
           echo "ARM_TENANT_ID=${{ fromJson(secrets.AZURE_CREDENTIALS).tenantId }}" >> $GITHUB_ENV
 
+      # Instala o Terraform no runner
       - name: Instalar Terraform
         uses: hashicorp/setup-terraform@v3
 
+      # Inicializa o Terraform na pasta terraform
       - name: Terraform Init
         run: |
           cd terraform
           terraform init -upgrade
 
+      # Gera o plano de execução do Terraform
       - name: Terraform Plan
         run: |
           cd terraform
           terraform plan -input=false
 
+      # Aplica as mudanças do Terraform usando as variáveis exportadas
       - name: Terraform Apply
         run: |
           cd terraform
